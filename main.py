@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands
 import os
 
-TOKEN = 'token'
+TOKEN = 'hu'
 txt = 'data.txt'
 blacklist = ['steam', 'ip', 'identifier', 'discord', '....', '....', '....'] 
 
