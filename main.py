@@ -1,12 +1,16 @@
+# FIXED CODE!
+# https://github.com/Azizishot/Lookup-BOT/
+# t.me/azizisblack for support
 import discord
 from discord.ext import commands
 import os
 
-TOKEN = 'hu'
+TOKEN = '' 
 txt = 'data.txt'
-blacklist = ['steam', 'ip', 'identifier', 'discord', '....', '....', '....'] 
+blacklist = ['nigg']
 
 intents = discord.Intents.default()
+intents.message_content = True  
 az = commands.Bot(command_prefix='>', intents=intents)
 
 async def countt():
@@ -23,7 +27,7 @@ async def lookup(query):
         with open(txt, 'r') as file:
             lines = file.readlines()
             for line in lines:
-                if query in line and not any(nig in line for nig in blacklist):  
+                if query in line and not any(nig in line for nig in blacklist):
                     found.append(line.strip())
     return found
 
@@ -35,17 +39,14 @@ async def on_ready():
 @az.command(name='search')
 async def search(ctx, *, query: str):
     if any(nig in query for nig in blacklist):
-        await ctx.send("You cannot search for that word.")
+        await ctx.send("blacklisted word.")
         return
     results = await lookup(query)
     if results:
-        chunks = [results[i:i+25] for i in range(0, len(results), 25)]  
-        for chunk in chunks:
-            embed = discord.Embed(title="Results")
-            for result in chunk:
-                embed.add_field(name="", value=f"```{result}```", inline=False)
+        for result in results:
+            embed = discord.Embed(title="Result", description=f"```{result}```")
             embed.set_footer(text="github.com/azizishot > " + str(ctx.author))
-            embed.set_thumbnail(url="https://sukuna.bio/media/logo2.png")  
+            embed.set_thumbnail(url="https://sukuna.bio/media/logo2.png")
             await ctx.send(embed=embed)
     else:
         await ctx.send(":sob:")
@@ -55,7 +56,7 @@ async def count(ctx):
     lines = await countt()
     embed = discord.Embed(title="Lines Count", description=f"```{lines}```")
     embed.set_footer(text="By github.com/azizishot")
-    embed.set_thumbnail(url="https://sukuna.bio/media/logo2.png")  
+    embed.set_thumbnail(url="https://sukuna.bio/media/logo2.png")
     await ctx.send(embed=embed)
 
 az.run(TOKEN)
